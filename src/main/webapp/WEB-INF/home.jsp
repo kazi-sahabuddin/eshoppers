@@ -29,7 +29,13 @@
                         <h5 class="card-title"><c:out value="${product.name}"/></h5>
                         <p class="card-text"><c:out value="${product.description}"/></p>
                         <p class="card-text">Price: $<c:out value="${product.price}"/></p>
-                        <a href="#" class="card-link btn btn-outline-info">Add to Cart</a>
+                        <a href="#" class="card-link btn btn-outline-info" onclick="addToCart(${product.id})">Add to Cart</a>
+                        <form style="visibility: hidden"
+                            id="addToCart_${product.id}"
+                              method="post"
+                              action="${pageContext.request.contextPath}/add-to-cart?productId=${product.id}"
+                        >
+                        </form>
                     </div>
                 </div>
             </div>
@@ -40,3 +46,10 @@
 </div>
 
 <%@include file="includes/footer.jsp"%>
+
+<script>
+    function addToCart(productId){
+        const form = document.getElementById("addToCart_"+productId);
+        form.submit();
+    }
+</script>
