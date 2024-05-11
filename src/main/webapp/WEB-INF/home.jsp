@@ -29,7 +29,7 @@
                         <h5 class="card-title"><c:out value="${product.name}"/></h5>
                         <p class="card-text"><c:out value="${product.description}"/></p>
                         <p class="card-text">Price: $<c:out value="${product.price}"/></p>
-                        <a href="#" class="card-link btn btn-outline-info" onclick="addToCart(${product.id})">Add to Cart</a>
+                        <a class="card-link btn btn-outline-info" onclick="addToCart(${product.id})">Add to Cart</a>
                         <form style="visibility: hidden"
                             id="addToCart_${product.id}"
                               method="post"
