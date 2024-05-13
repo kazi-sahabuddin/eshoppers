@@ -1,6 +1,9 @@
 package com.sahabuddin.eshoppers.web;
 
 import com.sahabuddin.eshoppers.domain.Cart;
+import com.sahabuddin.eshoppers.domain.User;
+import com.sahabuddin.eshoppers.service.CartService;
+import com.sahabuddin.eshoppers.util.SecurityContext;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +16,12 @@ import java.io.IOException;
 @WebServlet("/add-to-cart")
 public class CartServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(CartServlet.class);
+
+    private final CartService cartService;
+
+    public CartServlet(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Long productId = Long.parseLong(request.getParameter("productId"));
@@ -29,6 +38,8 @@ public class CartServlet extends HttpServlet {
     }
 
     private Cart getCart(HttpServletRequest request) {
-        return new Cart();
+        final User currentUser = SecurityContext.getCurrentUser(request);
+
+        return cartService.getCartByUser(currentUser);
     }
 }
